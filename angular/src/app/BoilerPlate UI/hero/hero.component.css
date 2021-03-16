@@ -1,0 +1,62 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #222;
+  margin: 0;
+}
+
+.hero {
+  background-image: url('https://images.pexels.com/photos/6801634/pexels-photo-6801634.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  height: 100vh;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+  z-index: 0;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.hero h1 {
+  font-size: 46px;
+  margin: -20px 0 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.form-control {
+  width: 17rem;
+  height: 2rem;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  margin-right: 3px;
+  font-size: 15px;
+}
+
+button {
+  height: 2.6rem;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  color: #fff;
+  background-color: #DB4130;
+  font-weight: bold;
+}

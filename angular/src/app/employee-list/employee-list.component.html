@@ -1,0 +1,44 @@
+<section class="container content" style="margin-top: 4rem;">
+    <h2>Employee List</h2>
+    <button class="btn btn-primary" routerLink="../add">Add New</button>
+    <hr>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Department</th>
+                <th scope="col">Time Preference</th>
+                <th scope="col">Subscribed</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <a>
+
+            </a>
+            <tr *ngFor="let employee of employees; let i = index" [class.selected]="isSelected(employee)"
+                style="cursor: pointer;">
+                <th scope="row">{{i+1}}</th>
+                <td>{{employee.name}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.phoneNumber}}</td>
+                <td>{{employee.department}}</td>
+                <td>{{employee.timePreference}}</td>
+                <td>{{employee.subscribe}}</td>
+                <td>
+                    <button type="button" class="btn btn-sm bg-secondary" (click)="onSelect(employee)">
+                        <i class="fas fa-pencil-alt"></i>
+                        {{ "Edit" }}
+                    </button>
+                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete()">
+                        <i class="fas fa-trash"></i>
+                        {{ "Delete" | localize }}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

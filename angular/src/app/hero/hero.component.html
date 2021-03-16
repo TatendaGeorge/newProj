@@ -1,0 +1,24 @@
+<body>
+    <div class="hero">
+        <div class="container">
+            <!-- Implementation of Interpolation -->
+            <div *ngIf="displayValue; then displayBlock; else displayNoneBlock"></div>
+            <ng-template #displayBlock>
+                <h1>{{welcomeMessage()}}</h1>
+            </ng-template>
+            <ng-template #displayNoneBlock>
+
+            </ng-template>
+            <p>
+                Lorem ipsum dolor sit . Dolorem officiis velit, laborum maxime ex
+                facili. quam molestiae
+                nemo aliquam error?
+            </p>
+            <input #myInput [(ngModel)]="email" type="text" bind-class="className" value=""
+                placeholder="Your Full Name Here..."><br><br>
+            <!-- Implementation of Property Binding -->
+            <input #myInput type="text" bind-class="className" value="{{fillVal}}" placeholder="Your Email Here...">
+            <button (click)="onClick(myInput.value)">AutoFill</button>
+        </div>
+    </div>
+</body>

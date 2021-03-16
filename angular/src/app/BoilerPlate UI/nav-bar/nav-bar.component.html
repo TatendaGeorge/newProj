@@ -1,0 +1,24 @@
+<body>
+    <nav class="nav">
+        <div class="container">
+            <h1 class="logo"><a href="/index.html"></a>My Website</h1>
+            <ul>
+                <li><a href="#" class="current">Home</a></li>
+                <li><a href="employees">Employee List</a></li>
+                <li><a href="departments">Department List</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', fixNav);
+
+        function fixNav() {
+            if (window.scrollY > nav.offsetHeight + 150) {
+                nav.classList.add('active');
+            } else {
+                nav.classList.remove('active');
+            }
+        }
+    </script>

@@ -1,0 +1,16 @@
+<section class="container content" style="margin-top: 4rem;">
+    <h3>You selected an employee with an ID of: {{ employeeId }}</h3>
+
+    <p>
+        <button (click)="showOverView()" class="btn btn-success" style="margin-right: 5px;">Overview</button>
+        <button (click)="showContact()" class="btn btn-success" style="margin-right: 5px;">Contact</button>
+    </p>
+    <router-outlet></router-outlet>
+    <hr>
+    <a (click)="goBack()" class="btn btn-primary" style="margin-right: 5px;">Previous</a>
+    <a (click)="goForward()" class="btn btn-primary" style="margin-right: 5px;">Next</a>
+
+    <div style="margin-top: 1rem;">
+        <button class="btn btn-danger" (click)="backToEmployees()">Back Employees</button>
+    </div>
+</section>

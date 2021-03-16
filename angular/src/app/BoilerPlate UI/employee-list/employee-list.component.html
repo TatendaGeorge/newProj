@@ -1,0 +1,10 @@
+<section class="container content" style="margin-top: 4rem;">
+    <h2>Employee List</h2>
+    <button class="btn btn-primary" routerLink="../add">Add New</button>
+    <hr>
+    <ul class="items">
+        <li *ngFor="let employee of employees" (click)="onSelect(employee)" [class.selected]="isSelected(employee)">
+            <span class="badge">{{employee.id}}</span>{{employee.name}}
+        </li>
+    </ul>
+</section>
