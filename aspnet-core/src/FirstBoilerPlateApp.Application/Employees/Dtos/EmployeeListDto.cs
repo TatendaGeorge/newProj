@@ -1,26 +1,28 @@
-﻿using System;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace FirstBoilerPlateApp.Employees.Dtos
 {
-    public class CreateEmployeeInput
-    {
-        [Required]
-        public virtual string Name { get; set; }
 
-        [Required]
+    [AutoMapTo(typeof(Employee))]
+    [AutoMapFrom(typeof(Employee))]
+    public class EmployeeListDto : EntityDto <Guid>
+    {
+        public virtual string Name { get; set; }
+        
         public virtual string Email { get; set; }
-        [Required]
+       
         public virtual string PhoneNumber { get; set; }
-        [Required]
+        
         public virtual string Department { get; set; }
-        [Required]
+        
         public virtual string TimePreference { get; set; }
-        [Required]
+        
         public virtual string subscribe { get; set; }
     }
 }

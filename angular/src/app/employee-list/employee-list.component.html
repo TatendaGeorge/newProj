@@ -1,6 +1,6 @@
 <section class="container content" style="margin-top: 4rem;">
     <h2>Employee List</h2>
-    <button class="btn btn-primary" routerLink="../add">Add New</button>
+    <button class="btn btn-sm bg-secondary" type="submit" routerLink="../add">Add New</button>
     <hr>
     <table class="table table-hover">
         <thead class="thead-dark">
@@ -30,12 +30,10 @@
                 <td>{{employee.subscribe}}</td>
                 <td>
                     <button type="button" class="btn btn-sm bg-secondary" (click)="onSelect(employee)">
-                        <i class="fas fa-pencil-alt"></i>
                         {{ "Edit" }}
                     </button>
-                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete()">
-                        <i class="fas fa-trash"></i>
-                        {{ "Delete" | localize }}
+                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(employee)">
+                        {{ "Delete" }}
                     </button>
                 </td>
             </tr>

@@ -25,9 +25,9 @@ namespace FirstBoilerPlateApp.Employees
         [Required]
         public virtual string TimePreference { get; set; }
         [Required]
-        public virtual string subcribe { get; set; }
+        public virtual string subscribe { get; set; }
 
-        public static Employee Create(string Name, string Email, string PhoneNumber, string Department, string TimePreference, string subcribe)
+        public static Employee Create(string Name, string Email, string PhoneNumber, string Department, string TimePreference, string subscribe)
         {
             var @employee = new Employee
             {
@@ -37,7 +37,7 @@ namespace FirstBoilerPlateApp.Employees
                 PhoneNumber = PhoneNumber,
                 Department = Department,
                 TimePreference = TimePreference,
-                subcribe = subcribe
+                subscribe = subscribe
             };
             //@event.SetDate(date);
             return @employee ;

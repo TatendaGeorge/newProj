@@ -14,7 +14,7 @@ const routes: Routes = [
     {
         path: '', component: AppComponent,
         children: [
-            { path: 'home', component: HeroComponent },
+            { path: '', component: HeroComponent },
             { path: 'employees', component: EmployeeListComponent },
             {
                 path: 'employees/:id',

@@ -1,12 +1,9 @@
 import { EmployeeServicesServiceProxy } from './../../shared/service-proxies/service-proxies';
-//import { NewEmployee } from './../new-employee';
 import { Component, OnInit } from '@angular/core';
-//import { EmployeeServiceService } from './../employee-service.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { forbiddenNameValidator } from '@shared/user-name.validator';
 import { PasswordValidator } from '@shared/password-validator';
-//import { checkServerIdentity } from 'node:tls';
 
 @Component({
   selector: 'app-add-employee',
@@ -38,10 +35,10 @@ export class AddEmployeeComponent implements OnInit {
   //   })
   // });
 
-  // departments = ['Hr', 'Accounting', 'Procurement'];
 
-  // departmentHasError = true;
-  // errorMsg = '';
+  departments = ['Hr', 'Accounting', 'Procurement'];
+  departmentHasError = true;
+  errorMsg = '';
 
   // userModel = new NewEmployee('Rob', 'rob@test.com', 5555555566, 'default', 'morning', true);
 
@@ -49,47 +46,31 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      userName: ['Tatenda', [Validators.required, Validators.minLength(3), forbiddenNameValidator(/admin/)]],
+      name: [''],
       email: [''],
-      subscribe: [false],
-      password: [''],
-      confirmPassword: [''],
-      address: this.fb.group({
-        city: [''],
-        state: [''],
-        postalCode: ['']
-      }),
-      alternateEmails: this.fb.array([])
-    }, { validators: PasswordValidator });
-
-    this.registrationForm.get('subscribe').valueChanges
-      .subscribe(checkedValue => {
-        const email = this.registrationForm.get('email');
-        if (checkedValue) {
-          email.setValidators(Validators.required);
-        } else {
-          email.clearValidators();
-        }
-        email.updateValueAndValidity();
-      });
+      phoneNumber: [''],
+      department: [''],
+      timePreference: [''],
+      subscribe: [''],
+    });
   }
 
 
-  // validateDepartment(value) {
-  //   if (value === 'default') {
-  //     this.departmentHasError = true;
-  //   } else {
-  //     this.departmentHasError = false;
-  //   }
-  // }
+  validateDepartment(value) {
+    if (value === 'default') {
+      this.departmentHasError = true;
+    } else {
+      this.departmentHasError = false;
+    }
+  }
 
   // onSubmit() {
-  //   this._employeeService.add(this.userModel)
-  //     .subscribe(
-  //       data => console.log('Success!', data),
-  //       error => this.errorMsg = error.statusText
-  //     )
-  // }
+  //    this._employeeService.add(this.userModel)
+  //       .subscribe(
+  //         data => console.log('Success!', data),
+  //        error => this.errorMsg = error.statusText
+  //        )
+  //   }
 
   onSubmit() {
     console.log(this.registrationForm.value);

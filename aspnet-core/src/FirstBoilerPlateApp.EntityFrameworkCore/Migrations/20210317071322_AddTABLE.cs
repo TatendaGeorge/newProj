@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FirstBoilerPlateApp.Migrations
 {
-    public partial class addEmplyeesToDatabase2 : Migration
+    public partial class AddTABLE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace FirstBoilerPlateApp.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimePreference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    subcribe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    subscribe = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),

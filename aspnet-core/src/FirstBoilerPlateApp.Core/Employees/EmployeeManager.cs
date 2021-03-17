@@ -52,19 +52,15 @@ namespace FirstBoilerPlateApp.Employees
             return await _employeeRepository.UpdateAsync(@employee);
         }
 
-        public Task DeleteAsync(Employee employee)
+        public async Task DeleteAsync(Guid employeeId)
         {
-            throw new NotImplementedException();
-        }
+            var empId = await _employeeRepository.FirstOrDefaultAsync(employeeId);
+            if(empId == null)
+            {
+                throw new UserFriendlyException("Could not found the employee, maybe it's deleted!");
+            }
 
-        public Task<Employee> GetUserByIdAsync(Guid employeeId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Employee> GetUserByIdAsync(Employee employee)
-        {
-            throw new NotImplementedException();
+            await _employeeRepository.DeleteAsync(empId);
         }
     }  
 }

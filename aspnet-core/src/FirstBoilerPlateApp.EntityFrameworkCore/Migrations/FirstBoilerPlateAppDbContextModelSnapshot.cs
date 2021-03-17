@@ -1568,7 +1568,7 @@ namespace FirstBoilerPlateApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("subcribe")
+                    b.Property<string>("subscribe")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

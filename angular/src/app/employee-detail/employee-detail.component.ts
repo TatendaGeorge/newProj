@@ -1,6 +1,9 @@
+import { EmployeeListDto, UpdateEmployeeDto } from './../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 //import { EmployeeServiceService } from '../employee-service.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { EmployeeServicesServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
 @Component({
@@ -9,47 +12,40 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
   styleUrls: ['./employee-detail.component.css']
 })
 export class EmployeeDetailComponent implements OnInit {
-
+  registrationForm: FormGroup;
   public employeeId;
-  public employees = [];
+  public employees = new EmployeeListDto();
+  public update = new UpdateEmployeeDto();
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  departments = ['Hr', 'Accounting', 'Procurement'];
+  departmentHasError = true;
+  constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private _employeeService: EmployeeServicesServiceProxy) { }
 
   ngOnInit(): void {
-    // let id = parseInt(this.route.snapshot.paramMap.get('id'));
-    // this.employeeId = id;
-
-
     this.route.paramMap.subscribe((params: ParamMap) => {
-      let id = parseInt(params.get('id'));
+      let id = (params.get('id'));
       this.employeeId = id;
     });
 
-  }
+    this._employeeService.getDetail(this.employeeId)
+      .subscribe(data => {
+        this.employees = data
+        this.registrationForm = this.fb.group({
+          name: [this.employees.name],
+          email: [this.employees.email],
+          phoneNumber: [this.employees.phoneNumber],
+          department: [this.employees.department],
+          timePreference: [this.employees.timePreference],
+          subscribe: [this.employees.subscribe],
+        });
+      })
 
-  goBack() {
-    // this._employeeService.getEmployees()
-    //   .subscribe(data => { this.employees = data });
 
-    // if (this.employeeId > 1 || this.employeeId > this.employees.length) {
-    //   let previousId = this.employeeId - 1;
-    //   this.router.navigate(['/employees', previousId]);
-    // }
-  }
-
-  goForward() {
-    // this._employeeService.getEmployees()
-    //   .subscribe(data => { this.employees = data });
-
-    // if (this.employeeId < this.employees.length) {
-    //   let forwardId = this.employeeId + 1;
-    //   this.router.navigate(['/employees', forwardId]);
-    // }
   }
 
   backToEmployees() {
     let selectedId = this.employeeId ? this.employeeId : null;
-    this.router.navigate(['/employees', { id: selectedId }]);
+    this.router.navigate(['app/employees', { id: selectedId }]);
   }
 
   showOverView() {
@@ -59,5 +55,14 @@ export class EmployeeDetailComponent implements OnInit {
   showContact() {
     this.router.navigate(['contact'], { relativeTo: this.route });
   }
-
+  onSubmit() {
+    console.log(this.registrationForm.value);
+    this.update = this.registrationForm.value
+    console.log(this.employeeId);
+    this._employeeService.updateEmployee(this.employeeId, this.update)
+      .subscribe(data => {
+        console.log(data);
+        this.router.navigate(['app/employees']);
+      })
+  }
 }

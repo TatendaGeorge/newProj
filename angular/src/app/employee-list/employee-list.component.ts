@@ -1,42 +1,64 @@
-// import { EmployeeServiceService } from './../employee-service.service';
-import { Component, OnInit } from '@angular/core';
+import { PagedListingComponentBase, PagedRequestDto } from 'shared/paged-listing-component-base';
+import { EmployeeListDto } from './../../shared/service-proxies/service-proxies';
+import { EmployeeServicesServiceProxy } from './../../shared/service-proxies/service-proxies';
+import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent implements OnInit {
+export class EmployeeListComponent extends PagedListingComponentBase<EmployeeListDto> {
 
-  public selectedId;
-  public employees = [];
+  protected delete(entity: EmployeeListDto): void {
+    console.log(entity);
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
-  ngOnInit(): void {
-    //throw new Error('Method not implemented.');
+    this.message.confirm(
+      this.l("UserDeleteWarningMessage", entity.name),
+      undefined,
+      (res) => {
+        if (res) {
+          this._employeeService.delete(stringify(entity.id))
+            .subscribe(() => {
+              this.notify.success("Deleted");
+              // this.router.navigate(['app/employees']);
+              this.refresh();
+            })
+        }
+      }
+    )
   }
 
-  // ngOnInit(): void {
-  //   this._employeeService.getEmployees()
-  //     .subscribe(data => this.employees = data);
+  protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+    throw new Error('Method not implemented.');
+  }
 
-  //   this.route.paramMap.subscribe((params: ParamMap) => {
-  //     let id = parseInt(params.get('id'));
-  //     this.selectedId = id;
-  //   });
-  // }
+  public selectedId;
+  public employees: EmployeeListDto[] = [];
+
+  constructor(private inject: Injector, private router: Router, private route: ActivatedRoute, private _employeeService: EmployeeServicesServiceProxy) {
+    super(inject);
+  }
+
+  ngOnInit(): void {
+    this._employeeService.getAll()
+      .subscribe(data => this.employees = data);
+
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let id = parseInt(params.get('id'));
+      this.selectedId = id;
+    });
+  }
 
   onSelect(employees) {
-    this.router.navigate(['/employees', employees.id])
+    this.router.navigate(['app/employees', employees.id])
   }
 
   isSelected(employees) {
     return employees.id === this.selectedId;
   }
 
-  delete() {
-    console.log('Hello');
 
-  }
 }

@@ -1,5 +1,8 @@
-﻿using Abp.Domain.Repositories;
+﻿using Abp.Application.Services.Dto;
+using Abp.Domain.Repositories;
+using Abp.UI;
 using FirstBoilerPlateApp.Employees.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,22 +26,20 @@ namespace FirstBoilerPlateApp.Employees
 
         public async Task CreateAsync(CreateEmployeeInput input)
         {
-            var @employee = Employee.Create(input.Name, input.Email, input.PhoneNumber, input.Department, input.TimePreference, input.subcribe);
+            var @employee = Employee.Create(input.Name, input.Email, input.PhoneNumber, input.Department, input.TimePreference, input.subscribe);
             await _employeeManager.CreateAsync(@employee);
         }
         public async Task<EmployeeListDto> GetDetailAsync(EntityDto<Guid> input)
         {
-            var @employee = await _employeetRepository
-                .GetAll()
-                .Where(e => e.Id == input.Id)
-                .FirstOrDefaultAsync();
+            var employee = await _employeetRepository
+                .FirstOrDefaultAsync(e => e.Id == input.Id);
 
-            if (@employee == null)
+            if (employee == null)
             {
                 throw new UserFriendlyException("Could not found the employee, maybe it's deleted.");
             }
 
-            return @employee.MapTo<EmployeeListDto>();
+            return ObjectMapper.Map<EmployeeListDto>(employee);
         }
 
         public async Task<UpdateEmployeeDto> UpdateEmployee(UpdateEmployeeDto employee, Guid employeeId)
@@ -59,9 +60,9 @@ namespace FirstBoilerPlateApp.Employees
 
         public async Task DeleteAsync(Guid employeeId)
         {
-            var user = await _employeeManager.GetUserByIdAsync(employeeId);
+            var user = await _employeetRepository.FirstOrDefaultAsync(employeeId);
 
-            await _employeeManager.DeleteAsync(user);
+            await _employeetRepository.DeleteAsync(ObjectMapper.Map<Employee>(user).Id);
         }
 
         public async Task<EmployeeListDto> GetUserByIdAsync(Guid employeeId)
@@ -73,6 +74,11 @@ namespace FirstBoilerPlateApp.Employees
             }
 
             return ObjectMapper.Map<EmployeeListDto>(e);
+        }
+
+        public async Task<List<EmployeeListDto>> GetAll()
+        {
+            return ObjectMapper.Map<List<EmployeeListDto>>(await _employeetRepository.GetAll().ToListAsync());
         }
     }
 }

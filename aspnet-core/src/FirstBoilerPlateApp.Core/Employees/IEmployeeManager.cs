@@ -8,7 +8,5 @@ namespace FirstBoilerPlateApp.Employees
     {
         Task CreateAsync(Employee employee);
         Task<Employee> UpdateEmployeeAsync(Employee employee);
-        Task DeleteAsync(Employee employee);
-        Task<Employee> GetUserByIdAsync(Guid employeeId);
     }
 }

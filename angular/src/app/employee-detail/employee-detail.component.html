@@ -1,15 +1,54 @@
 <section class="container content" style="margin-top: 4rem;">
     <h3>You selected an employee with an ID of: {{ employeeId }}</h3>
+    <div class="container-fluid">
+        <hr>
+        <div class="container-fluid">
+            <h2>Details</h2>
+            <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input
+                        [class.is-invalid]="registrationForm.get('name').invalid && registrationForm.get('name').touched"
+                        formControlName="name" type="text" class="form-control">
+                    <div *ngIf="registrationForm.get('name').invalid && registrationForm.get('name').touched">
+                        <small *ngIf="registrationForm.get('name').errors?.required" class="text-danger">Username is
+                            Required</small>
+                        <small *ngIf="registrationForm.get('name').errors?.minlength" class="text-danger">Username
+                            must be
+                            at least 3 characters</small>
+                        <small *ngIf="registrationForm.get('name').errors?.forbiddenName" class="text-danger">Username
+                            not
+                            allowed</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input
+                        [class.is-invalid]="registrationForm.get('email').invalid && registrationForm.get('email').touched"
+                        type="text" formControlName="email" class="form-control">
+                    <small class="text-danger"
+                        [class.d-none]="registrationForm.get('email').valid || registrationForm.get('email').untouched">Email
+                        is required</small>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" pattern="^\d{10}$"
+                        [class.is-invalid]="registrationForm.get('phoneNumber').invalid && registrationForm.get('phoneNumber').touched"
+                        class="form-control" name="phone" formControlName="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select [class.is-invalid]="departmentHasError && registrationForm.get('department').touched"
+                        class="custom-select" name="department" formControlName="department">
+                        <option value="default">Select department</option>
+                        <option *ngFor="let department of departments">{{ department }}</option>
+                    </select>
+                </div>
 
-    <p>
-        <button (click)="showOverView()" class="btn btn-success" style="margin-right: 5px;">Overview</button>
-        <button (click)="showContact()" class="btn btn-success" style="margin-right: 5px;">Contact</button>
-    </p>
-    <router-outlet></router-outlet>
-    <hr>
-    <a (click)="goBack()" class="btn btn-primary" style="margin-right: 5px;">Previous</a>
-    <a (click)="goForward()" class="btn btn-primary" style="margin-right: 5px;">Next</a>
-
+                <button class="btn btn-primary" type="submit">Update Employee</button>
+            </form>
+        </div>
+    </div>
     <div style="margin-top: 1rem;">
         <button class="btn btn-danger" (click)="backToEmployees()">Back Employees</button>
     </div>
